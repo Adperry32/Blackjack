@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlackjackCard.cs" />
+    <Compile Include="BlackjackGame.cs" />
     <Compile Include="BlackjackHand.cs" />
     <Compile Include="Cards.cs" />
     <Compile Include="Deck.cs" />

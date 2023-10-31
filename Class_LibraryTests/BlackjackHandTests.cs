@@ -32,7 +32,24 @@ namespace Class_Library.Tests
         [TestMethod()]
         public void BlackjackHandTest1()
         {
-            Assert.Fail();
+            var hand = new BlackjackHand();
+            var checkHand = new BlackjackHand();
+            var blackJackHand = new BlackjackHand();
+
+            hand.AddCard(new BlackjackCard(CardFace.A, CardSuit.Heart));
+            hand.AddCard(new BlackjackCard(CardFace.Eight, CardSuit.Club));
+            Assert.AreEqual(19, hand.Score);
+
+            checkHand.AddCard(new BlackjackCard(CardFace.A, CardSuit.Heart));
+            checkHand.AddCard(new BlackjackCard(CardFace.Eight, CardSuit.Club));
+            checkHand.AddCard(new BlackjackCard(CardFace.Ten, CardSuit.Diamond));
+            Assert.AreEqual(19, hand.Score);
+
+            blackJackHand.AddCard(new BlackjackCard(CardFace.K, CardSuit.Club));
+            blackJackHand.AddCard(new BlackjackCard(CardFace.A, CardSuit.Diamond));
+            Assert.AreEqual(21, hand.Score);
+
+
         }
 
         [TestMethod()]

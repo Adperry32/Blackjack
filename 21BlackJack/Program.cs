@@ -34,17 +34,24 @@ namespace _21BlackJack
 
                         case 2:
                             deck.Shuffle();
-                            List<ICard> dealtCards = deck.Deal();
-                            int x = 5;
-                            int y = 5;
+                            Console.SetBufferSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+                            List<ICard> shuffled = deck.GetShuffledDeck();
 
-                            foreach(ICard card in dealtCards)
+                            int x = 0;
+                            int y = 10;
+                            int maxCardsPerRow = Console.WindowWidth;
+
+                            foreach (ICard card in shuffled)
                             {
+                                if (x  > maxCardsPerRow)
+                                {
+                                    x = 0;
+                                    y += 6; // Adjust for card height
+                                }
                                 card.DrawMethod(x, y);
                                 x += 10;
                             }
-                  
-                            
+                 
                             break;
 
                         case 3:

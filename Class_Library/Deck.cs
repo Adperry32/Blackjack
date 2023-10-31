@@ -8,7 +8,7 @@ namespace Class_Library
 {
     public class Deck
     {
- 
+
         private List<ICard> _cards = new List<ICard>();
         public Deck()
         {
@@ -17,7 +17,7 @@ namespace Class_Library
         public List<ICard> FreshDeck()
         {
             List<ICard> deck = new List<ICard>();
-            for (int i = 0; i < 13; i++)
+            for (int i = 1; i < 14; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
@@ -54,7 +54,15 @@ namespace Class_Library
                 ICard card = _cards[j];
                 _cards[j] = _cards[i];
                 _cards[i] = card;
+
+
             }
+           
+        }
+        public List<ICard> GetShuffledDeck()
+        {
+            Shuffle();
+            return _cards.ToList();
         }
     }
 }

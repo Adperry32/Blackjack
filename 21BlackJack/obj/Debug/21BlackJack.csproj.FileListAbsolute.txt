@@ -18,3 +18,13 @@ C:\Users\perry\Downloads\21BlackJack\21BlackJack\21BlackJack\obj\Debug\21BlackJa
 C:\Users\perry\Downloads\21BlackJack\21BlackJack\21BlackJack\obj\Debug\21BlackJack.csproj.CopyComplete
 C:\Users\perry\Downloads\21BlackJack\21BlackJack\21BlackJack\obj\Debug\21BlackJack.exe
 C:\Users\perry\Downloads\21BlackJack\21BlackJack\21BlackJack\obj\Debug\21BlackJack.pdb
+C:\Users\perry\Documents\Visual Studio 2022\Local Repo\21BlackJack\21BlackJack\bin\Debug\21BlackJack.exe.config
+C:\Users\perry\Documents\Visual Studio 2022\Local Repo\21BlackJack\21BlackJack\bin\Debug\21BlackJack.exe
+C:\Users\perry\Documents\Visual Studio 2022\Local Repo\21BlackJack\21BlackJack\bin\Debug\21BlackJack.pdb
+C:\Users\perry\Documents\Visual Studio 2022\Local Repo\21BlackJack\21BlackJack\bin\Debug\Class_Library.dll
+C:\Users\perry\Documents\Visual Studio 2022\Local Repo\21BlackJack\21BlackJack\bin\Debug\Class_Library.pdb
+C:\Users\perry\Documents\Visual Studio 2022\Local Repo\21BlackJack\21BlackJack\obj\Debug\21BlackJack.csproj.AssemblyReference.cache
+C:\Users\perry\Documents\Visual Studio 2022\Local Repo\21BlackJack\21BlackJack\obj\Debug\21BlackJack.csproj.CoreCompileInputs.cache
+C:\Users\perry\Documents\Visual Studio 2022\Local Repo\21BlackJack\21BlackJack\obj\Debug\21BlackJack.csproj.CopyComplete
+C:\Users\perry\Documents\Visual Studio 2022\Local Repo\21BlackJack\21BlackJack\obj\Debug\21BlackJack.exe
+C:\Users\perry\Documents\Visual Studio 2022\Local Repo\21BlackJack\21BlackJack\obj\Debug\21BlackJack.pdb

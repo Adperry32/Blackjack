@@ -9,7 +9,7 @@ namespace Class_Library
 {
     public enum CardFace
     {
-        A = 14,
+        A = 1,
         K = 13,
         Q = 12,
         J = 11,
@@ -32,6 +32,7 @@ namespace Class_Library
     }
     public class Cards : ICard
     {
+
         public CardFace Face { get; private set; }
 
         public CardSuit Suit { get; private set; }
@@ -43,44 +44,104 @@ namespace Class_Library
         }
         public void DrawMethod(int x, int y)
         {
-            ICard card = Factory.CreateCard(Face, Suit); // Replace this with your factory class logic
 
-            Console.SetCursorPosition(x, y);
+            char suitSymbol = GetCardSymbol(Suit);
+            string faceValue = GetCardValue(Face);
 
-            char suitSymbol = GetCardSymbol(card.Suit);
-            int faceValue = GetCardValue(card.Face);
+            if (Suit == CardSuit.Spade || Suit == CardSuit.Club)
+            {
+                //setting symbols in the corners and color per suit
 
-            //ConsoleColor suitColor = GetSuitColor(card.Suit);
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
 
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.Black;
+            }
+            else if (Suit == CardSuit.Heart || Suit == CardSuit.Diamond)
+            {
+                //setting symbols in the corners and color per suit
 
-            Console.WriteLine($" {suitSymbol}      {suitSymbol} ");
-            Console.WriteLine("        ");
-            Console.WriteLine($"    {faceValue}    ");
-            Console.WriteLine("        ");
-            Console.WriteLine($" {suitSymbol}      {suitSymbol} ");
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Red;
 
+
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                Console.SetCursorPosition(x, y + i);
+
+                switch (i)
+                {
+                    case 0:
+                    case 4:
+                        Console.WriteLine($"{suitSymbol}     {suitSymbol}");
+                        break;
+                    case 2:
+                        //check that value isnt null or types that cant be parsed to int
+                        if (faceValue != null && faceValue != "A" && faceValue != "K" && faceValue != "Q" && faceValue != "J")
+                        {
+
+                            int faceNumber = int.Parse(faceValue);
+                           
+                            if (faceNumber == 10)
+                            {
+                                //adjust the space for a double digit number
+                                Console.WriteLine($"   {faceValue}  ");
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine($"   {faceValue}   ");
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine($"   {faceValue}   ");
+                            break;
+                        }
+                    default:
+                        Console.WriteLine("       ");
+                        break;
+
+                }
+
+            }
             Console.ResetColor();
-            Console.WriteLine();
+
         }
 
-        public int GetCardValue(CardFace face)
+        public string GetCardValue(CardFace face)
         {
-            int value = 0;
-            if(((int)face) <= 10)
+
+            if (((int)face) >= 2 && ((int)face) <= 10)
             {
-               value = (int)face;
+                return ((int)face).ToString();
             }
-            if(((int)face) > 10)
+            else if ((int)face == 1)
             {
-                //face.GetType();
+                return "A";
+            }
+            else
+            {
+                // handle the special faced cards (A,K,Q,J)
+                switch (face)
+                {
+                    case CardFace.A:
+                        return "A";
+                    case CardFace.J:
+                        return "J";
+                    case CardFace.Q:
+                        return "Q";
+                    case CardFace.K:
+                        return "K";
+                }
             }
 
-            return value;
+            return null;
+
         }
-        public static char GetCardSymbol(CardSuit suit) 
-        { 
+        public static char GetCardSymbol(CardSuit suit)
+        {
             switch (suit)
             {
                 case CardSuit.Spade:
@@ -95,5 +156,6 @@ namespace Class_Library
                     return ' ';
             }
         }
+
     }
 }

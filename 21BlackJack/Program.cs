@@ -9,11 +9,10 @@ namespace _21BlackJack
 {
     class Program
     {
-
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-
+            BlackjackGame game = new BlackjackGame();
             Deck deck = new Deck();
    
             #region MenuControl
@@ -29,7 +28,7 @@ namespace _21BlackJack
                     switch (num)
                     {
                         case 1:
-                            Console.WriteLine("\nPlay BlackJack\n");
+                            game.PlayRound();
                             break;
 
                         case 2:

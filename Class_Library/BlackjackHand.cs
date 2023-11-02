@@ -11,10 +11,12 @@ namespace Class_Library
         public int Score { get; private set; }
 
         public bool IsDealer { get; }
+        public bool ShowFirstCard {  get; set; }
 
         public BlackjackHand(bool isDealer = false)
         {
             IsDealer = isDealer;
+            ShowFirstCard = false;
         }
 
         public override void AddCard(ICard card)
@@ -32,23 +34,49 @@ namespace Class_Library
             {
                 if (card is BlackjackCard blackjackCard)
                 {
-                    if (IsDealer && isFirstCard)
+                    if (IsDealer && isFirstCard && !ShowFirstCard)
                     {
                         Console.SetCursorPosition(x, y);
-                        Console.Write("XX");
+                        for (int i = 0; i < 5; i++)
+                        { 
+                            string cardBack = "***21**";
+                            string cardBack2 = "*******";
+                            Console.SetCursorPosition(x + 1, y + i);
+                            Console.BackgroundColor = ConsoleColor.Blue;
+                            switch (i)
+                            {
+                                case 0:
+                                case 4:
+                                   
+                                    Console.WriteLine($"{cardBack}");
+                                    break;
+                                case 2:
+                                    Console.WriteLine($"{cardBack2}");
+                                    break;
+                                default:
+                                    Console.WriteLine($"{cardBack2}");
+                                    break;
+
+                            }
+
+                        }
+                        Console.ResetColor();
+                    }
+                    else if(IsDealer && ShowFirstCard)
+                    {
+                        blackjackCard.DrawMethod(5 + 1, 5);
+                        ShowFirstCard=false;
                     }
                     else
                     {
                         blackjackCard.DrawMethod(x + 1, y);
                         Score += blackjackCard.Value;
-
+                    
                         if (blackjackCard.Face == CardFace.A)
                         {
                             numberOfAces++;
                         }
                     }
-
-                    x += 2;
                     isFirstCard = false;
                 }
             }

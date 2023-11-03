@@ -15,6 +15,7 @@ namespace Class_Library
         Deck _deck = new Deck();
         bool playerBust = false;
         bool fiveCardWinner = false;
+        bool dealerTurn = false;
 
         public void PlayRound()
         {
@@ -23,6 +24,9 @@ namespace Class_Library
             PlayersTurn();
             DealersTurn();
             DeclareWinner();
+
+            //reset game 
+            ResetGame();
 
         }
 
@@ -58,8 +62,6 @@ namespace Class_Library
 
             _dealer.AddCard(_deck.Deal(1)[0]);
             _dealer.Draw(dealerX, dealerY);
-
-
         }
 
         public void PlayersTurn()
@@ -70,11 +72,12 @@ namespace Class_Library
 
             while (_player.Score < 21 && rotations < 5)
             {
+                dealerTurn = false;
                 ShowScore();
 
                 //get user input to add card to hand or stay with current points
                 Console.SetCursorPosition(25, 18);
-                Console.WriteLine("Player's turn. Do you want to HIT or STAND? (Type 'H' for Hit, 'S' for Stand) ");
+                Console.WriteLine("Player's turn. Do you want to HIT or STAND? (Type 'H' for Hit, 'S' for Stand)");
                 string choice = Console.ReadLine();
 
                 if (choice.Equals("H", StringComparison.OrdinalIgnoreCase))
@@ -90,9 +93,12 @@ namespace Class_Library
                     //check if player busted
                     if (_player.Score > 21)
                     {
-                        Console.SetCursorPosition(25, 18);
-                        Console.WriteLine($"BUST!!{_player.Score}  Player Loses ");
                         playerBust = true;
+                        DeclareWinner();
+                    }
+
+                    if (_player.Score == 21)
+                    {
                         DeclareWinner();
                     }
                     rotations++;
@@ -118,7 +124,8 @@ namespace Class_Library
         }
         public void DealersTurn()
         {
-            ShowScore();
+            dealerTurn = true;
+
 
             int dealerX = 25;
             int dealerY = 5;
@@ -126,6 +133,7 @@ namespace Class_Library
             //reveal dealers first card
             _dealer.ShowFirstCard = true;
             _dealer.Draw(15, 5);
+            ShowScore();
 
             while (_dealer.Score <= 17)
             {
@@ -135,7 +143,7 @@ namespace Class_Library
                     Console.SetCursorPosition(25, 22);
                     Console.Write(new string(' ', Console.WindowWidth));
                     Console.SetCursorPosition(25, 22);
-                    Console.WriteLine("**Dealer Wins** " + _dealer.Score);
+                    Console.WriteLine("**Dealer Wins** ");
                     break;
                 }
                 _dealer.AddCard(_deck.Deal(1)[0]);
@@ -143,54 +151,110 @@ namespace Class_Library
                 dealerX += 10;
 
                 //sleep to simulate dealer thinking/flipping new card
-                Thread.Sleep(2500);
+                Thread.Sleep(1500);
             }
         }
 
         public void DeclareWinner()
         {
             ShowScore();
+
             if (fiveCardWinner == true)
             {
                 Console.WriteLine("Five cards drawn - Player Wins " + _player.Score);
             }
-            else if(_dealer.Score > 21 && _player.Score > _dealer.Score) 
+
+
+            else if (_dealer.Score > 21)
             {
                 Console.SetCursorPosition(25, 23);
-                Console.WriteLine("Winner Winner (!!Player!!)");
-                Console.WriteLine("(Dealer Bust)");
+                Console.WriteLine("Winner Winner (!!Player!!)  Dealer Bust^^ " + _dealer.Score);
+                Thread.Sleep(3000);
+                Console.Clear();
             }
-            else if(_dealer.Score > _player.Score)
+            else if (_player.Score > 21)
             {
-                Console.SetCursorPosition(25, 23);
-                Console.WriteLine("Winner Winner (^^Dealer^^)");
+                Console.SetCursorPosition(25, 25);
+                Console.WriteLine("Winner Winner (^^Dealer^^)   Player Bust!! " + _player.Score);
+                Thread.Sleep(3000);
+                Console.Clear();
+            }
+            else if (_dealer.Score > _player.Score)
+            {
+                Console.SetCursorPosition(25, 25);
+                Console.WriteLine("Winner Winner (^^Dealer^^) Score: " + _dealer.Score);
+                Thread.Sleep(3000);
+                Console.Clear();
+            }
+            else if (_player.Score > _dealer.Score)
+            {
+                Console.SetCursorPosition(25, 25);
+                Console.WriteLine("Winner Winner (!!Player!!) Score: " + _player.Score);
+                Thread.Sleep(3000);
+                Console.Clear();
             }
             else
             {
                 Console.SetCursorPosition(25, 23);
                 Console.WriteLine(" Its a push (tie)!");
-                Console.WriteLine("Dealer Cant Tie---Player Wins!!!");
+                Thread.Sleep(3000);
+                Console.Clear();
             }
+           
         }
 
         public void ShowScore()
         {
-            Console.SetCursorPosition(85, 5);
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
-            Console.WriteLine(" __________________ ");
-            Console.SetCursorPosition(85, 6);
-            Console.WriteLine("|       SCORE      |");
-            Console.SetCursorPosition(85, 7);
-            Console.WriteLine("|------------------|");
-            Console.SetCursorPosition(85, 8);
-            Console.WriteLine("|                  |");
-            Console.SetCursorPosition(85, 9);
-            Console.WriteLine($"|Player:{_player.Score}         |");
-            Console.SetCursorPosition(85, 10);
-            Console.WriteLine($"|Dealer:{_dealer.Score}         |");
-            Console.SetCursorPosition(85, 11);
-            Console.WriteLine("|__________________|");
-            Console.ResetColor();
+            if (dealerTurn == true)
+            {
+                Console.SetCursorPosition(85, 5);
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine(" __________________ ");
+                Console.SetCursorPosition(85, 6);
+                Console.WriteLine("|       SCORE      |");
+                Console.SetCursorPosition(85, 7);
+                Console.WriteLine("|------------------|");
+                Console.SetCursorPosition(85, 8);
+                Console.WriteLine("|                  |");
+                Console.SetCursorPosition(85, 9);
+                Console.WriteLine($"|Player:{_player.Score}         |");
+                Console.SetCursorPosition(85, 10);
+                Console.WriteLine($"|Dealer:{_dealer.Score}         |");
+                Console.SetCursorPosition(85, 11);
+                Console.WriteLine("|__________________|");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.SetCursorPosition(85, 5);
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
+                Console.WriteLine(" __________________ ");
+                Console.SetCursorPosition(85, 6);
+                Console.WriteLine("|       SCORE      |");
+                Console.SetCursorPosition(85, 7);
+                Console.WriteLine("|------------------|");
+                Console.SetCursorPosition(85, 8);
+                Console.WriteLine("|                  |");
+                Console.SetCursorPosition(85, 9);
+                Console.WriteLine($"|Player:{_player.Score}         |");
+                Console.SetCursorPosition(85, 10);
+                Console.WriteLine($"|Dealer:{0}          |");
+                Console.SetCursorPosition(85, 11);
+                Console.WriteLine("|__________________|");
+                Console.ResetColor();
+            }
+
+        }
+
+        public void ResetGame()
+        {
+            dealerTurn = false;
+            _dealer = new BlackjackHand(true);
+            _player = new BlackjackHand();
+            _deck = new Deck();
+
+            _player.Score = 0;
+            _dealer.Score = 0;
         }
     }
 }

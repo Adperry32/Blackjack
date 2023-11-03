@@ -9,10 +9,11 @@ namespace Class_Library
 {
     public class BlackjackHand : Hand
     {
-        public int Score { get; private set; }
+        public int Score { get; set; }
 
         public bool IsDealer { get; }
-        public bool ShowFirstCard {  get; set; }
+        public bool ShowFirstCard { get; set; }
+        public bool isFirstCard { get; set; }
 
         public BlackjackHand(bool isDealer = false)
         {
@@ -23,13 +24,12 @@ namespace Class_Library
         public override void AddCard(ICard card)
         {
             base.AddCard((BlackjackCard)card);
-
         }
         public override void Draw(int x, int y)
         {
             Score = 0;
             int numberOfAces = 0;
-            bool isFirstCard = true;
+            isFirstCard = true;
 
             foreach (var card in _cards)
             {
@@ -39,17 +39,17 @@ namespace Class_Library
                     {
                         Console.SetCursorPosition(x, y);
                         for (int i = 0; i < 5; i++)
-                        { 
+                        {
                             string cardBack = "***21**";
                             string cardBack2 = "*******";
                             Console.SetCursorPosition(x + 1, y + i);
                             Console.BackgroundColor = ConsoleColor.Blue;
-                       
+
                             switch (i)
                             {
                                 case 0:
                                 case 4:
-                                   
+
                                     Console.WriteLine($"{cardBack}");
                                     break;
                                 case 2:
@@ -64,17 +64,17 @@ namespace Class_Library
                         Score += blackjackCard.Value;
                         Console.ResetColor();
                     }
-                    else if(IsDealer && ShowFirstCard)
+                    else if (IsDealer && ShowFirstCard)
                     {
                         blackjackCard.DrawMethod(5 + 1, 5);
-                        ShowFirstCard=false;
+                        Score += blackjackCard.Value;
+                        ShowFirstCard = false;
                         Thread.Sleep(1000);
                     }
                     else
                     {
                         blackjackCard.DrawMethod(x + 1, y);
                         Score += blackjackCard.Value;
-                        Thread.Sleep(1500);
 
                         if (blackjackCard.Face == CardFace.A)
                         {
@@ -86,7 +86,7 @@ namespace Class_Library
             }
 
             // Handle Aces with flexible values (1 or 11).
-           while (numberOfAces > 0 && Score + 10 <= 21)
+            while (numberOfAces > 0 && Score + 10 <= 21)
             {
                 Score += 10;
                 numberOfAces--;

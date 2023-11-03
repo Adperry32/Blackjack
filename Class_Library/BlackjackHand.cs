@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Class_Library
@@ -43,6 +44,7 @@ namespace Class_Library
                             string cardBack2 = "*******";
                             Console.SetCursorPosition(x + 1, y + i);
                             Console.BackgroundColor = ConsoleColor.Blue;
+                       
                             switch (i)
                             {
                                 case 0:
@@ -58,20 +60,22 @@ namespace Class_Library
                                     break;
 
                             }
-
                         }
+                        Score += blackjackCard.Value;
                         Console.ResetColor();
                     }
                     else if(IsDealer && ShowFirstCard)
                     {
                         blackjackCard.DrawMethod(5 + 1, 5);
                         ShowFirstCard=false;
+                        Thread.Sleep(1000);
                     }
                     else
                     {
                         blackjackCard.DrawMethod(x + 1, y);
                         Score += blackjackCard.Value;
-                    
+                        Thread.Sleep(1500);
+
                         if (blackjackCard.Face == CardFace.A)
                         {
                             numberOfAces++;
